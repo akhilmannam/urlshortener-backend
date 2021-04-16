@@ -97,12 +97,11 @@ app.post('/urls/:id', authenticate, async (req, res) => {
     try {
         let connection = await mongodb.connect(URL, {useUnifiedTopology : true});
         let db = connection.db(DB);
-        let response = await db.collection('users').updateOne({_id : mongodb.ObjectID(req.params.id)},{$push : {links : {$each : [{longURL : req.body.longURL , shortURL : nanoid(6)}]}}});
+        await db.collection('users').updateOne({_id : mongodb.ObjectID(req.params.id)},{$push : {links : {$each : [{longURL : req.body.longURL , shortURL : nanoid(6)}]}}});
         await connection.close();
-//         res.json({
-//             message : "URL Created"
-//         })
-        res.json(response);
+        res.json({
+            message : "URL Created"
+        })
     } catch (error) {
         console.log(error);
     }
