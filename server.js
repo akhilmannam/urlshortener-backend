@@ -102,6 +102,7 @@ app.post('/urls/:id', authenticate, async (req, res) => {
         res.json({
             message : "URL Created"
         })
+        res.json(response);
     } catch (error) {
         console.log(error);
     }
