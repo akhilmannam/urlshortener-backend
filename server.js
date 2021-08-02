@@ -127,12 +127,10 @@ app.post("/urls/:id", authenticate, async (req, res) => {
 			useUnifiedTopology: true,
 		});
 		let db = connection.db(DB);
-		let longURLExists = await db
-			.collection("users")
-			.findOne({
-				_id: mongodb.ObjectID(req.params.id),
-				"links.longURL": req.body.longURL,
-			});
+		let longURLExists = await db.collection("users").findOne({
+			_id: mongodb.ObjectID(req.params.id),
+			"links.longURL": req.body.longURL,
+		});
 		if (!longURLExists) {
 			await db.collection("users").updateOne(
 				{ _id: mongodb.ObjectID(req.params.id) },
@@ -160,8 +158,6 @@ app.post("/urls/:id", authenticate, async (req, res) => {
 				status: false,
 			});
 		}
-
-		//res.json(response);
 	} catch (error) {
 		console.log(error);
 	}
